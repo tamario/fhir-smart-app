@@ -1,12 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Index</title>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <title>tamarioExample-SMART-App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
+    <link rel='stylesheet' type='text/css' href='./src/css/sample_app.css'>
+
 </head>
 <body>
+<div id='errors'>
+</div>
+<div id="loading" class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<div id='holder' >
+    <h2>Example-SMART-App</h2>
+    <div>
+        <h2>Client Data</h2>
+        <label for="fname">First Name</label>
+        <input type="text" name="firstname" id="fname" value="">
+        <label for="lname">Last Name</label>
+        <input type="text" name="firstname" id="lname" value="">
+        <label for="birthdate">Date of Birth</label>
+        <input type="text" name="date of birth" id="birthdate" value="">
+        <label for="patientID">Client ID</label>
+        <input type="text" name="Patient ID" id="patientID" value="">
 
-<h1>Index</h1>
-<p>This is a paragraph.</p>
+        <h2>Additional Data</h2>
+        <select id=clientStatus name="Client Status">
+            <option value="Select a Client Status">-- Select a Client Status --</option>
+            <option value="1st visit to Foundry, never received provider services">1st visit to Foundry, never received provider services</option>
+            <option value="1st visit to Foundry, previously received provider services">1st visit to Foundry, previously received provider services</option>
+            <option value="Returning visit">Returning visit</option>
+        </select>
+        <select id="service" name="Service">
+            <option value="Select a Service">-- Select a Service --</option>
+            <option value="Primary Care">Primary Care</option>
+            <option value="Mental Health Services">Mental Health Services</option>
+            <option value="Substance Use Services">Substance Use Services</option>
+            <option value="Social Services">Social Services</option>
+            <option value="Youth and Family Peer Support and Navigation">Youth and Family Peer Support and Navigation</option>
+            <option value="Other Services">Other Services</option>
+        </select>
 
+        <input type="button" value="Send Survey" id="sendSurvey">
+
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Survey</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>07/27/2017 at 10:08</td>
+                <td>CG CAHPS Standardized Survey</td>
+                <td><i class="glyphicon glyphicon-arrow-right"></i></td>
+            </tr>
+            <tr>
+                <td>07/27/2017 at 10:07</td>
+                <td>Black Creek - Standardized</td>
+                <td><i class="glyphicon glyphicon-arrow-right"></i></td>
+            </tr>
+            <tr>
+                <td>07/13/2017 at 11:47</td>
+                <td>Work Star</td>
+                <td><i class="glyphicon glyphicon-arrow-right"></i></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<!---->
+</div>
+<script src='./src/js/proof-of-concept.js'></script>
+<script src='./node_modules/fhirclient/fhir-client.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    console.log("hello");
+    extractData().then(
+        //Display Patient Demographics and Observations if extractData was success
+        function(p) {
+            drawVisualization(p);
+            console.log("finished")
+        },
+
+        //Display 'Failed to call FHIR Service' if extractData failed
+        function() {
+            $('#loading').hide();
+            $('#errors').html('<p> Failed to call FHIR Service </p>');
+        }
+    );
+</script>
+<script>
+    $( "#sendSurvey" ).click(function () {
+        var fname         = $( "#fname" ).val();
+        var lname         = $( "#lname" ).val();
+        var birthdate     = $( "#birthdate" ).val();
+        var patientID     = $( "#patientID" ).val();
+        var clientStatus  = $( "#clientStatus" ).val();
+        var service       = $( "#service" ).val();
+
+        var inputStatus = 1;
+        $(":input").each(function() {
+            if($(this).val() === "") {
+                inputStatus = 0;
+            }
+        });
+
+        if(clientStatus != "Select a Client Status" && service != "Select a Service" && inputStatus){
+            sendRemoteControlSurvey(patientID, fname, lname, birthdate, clientStatus, service);
+        }
+        else{
+            alert("Check all fields are filled out");
+        }
+    });
+</script>
 </body>
 </html>

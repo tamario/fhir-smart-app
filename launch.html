@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Launch</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
+    <title>smart app</title>
 </head>
 <body>
-
-<h1>Launch</h1>
-<p>This is a paragraph.</p>
-
+<script src='./node_modules/fhirclient/fhir-client.js'></script>
+<script>
+    FHIR.oauth2.authorize({
+        'client_id': '33f4c676-7334-48c1-b795-19fd88d1a312',
+        'scope':  'patient/DocumentReference.write patient/DocumentReference.read patient/Patient.read patient/Observation.read launch online_access openid profile'
+    });
+</script>
+<div class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
 </body>
 </html>
