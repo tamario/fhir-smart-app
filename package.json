@@ -14,6 +14,7 @@
   "dependencies": {
     "express": "^4.15.3",
     "fhirclient": "^0.1.11",
+    "http-server": "^0.10.0",
     "path": "^0.12.7"
   }
 }

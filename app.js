@@ -6,9 +6,9 @@ const port = process.env.PORT || 8080;
 
 const indexPath = path.join(__dirname, 'index.html');
 const launchPath = path.join(__dirname, 'launch.html');
-const publicPath = express.static(path.join(__dirname, 'public'));
 
-app.use('/public', publicPath);
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
+app.use('/public', express.static(__dirname + '/src/'));
 
 app.get('/', function (_, res) {
     res.sendFile(indexPath)
