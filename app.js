@@ -15,6 +15,8 @@ app.get('/launch', function (_, res) {
     res.sendFile(launchPath)
 });
 
+app.use(express.static('static'));
+
 app.listen(port, function () {
     console.log('Magic happens on port ' + port);
 });
