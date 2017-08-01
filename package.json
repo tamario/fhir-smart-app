@@ -6,6 +6,14 @@
   "scripts": {
     "start": "node app.js"
   },
+  "engines": {
+    "node": "6.10.2"
+  },
   "author": "tamar",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "fhirclient": "^0.1.11",
+    "path": "^0.12.7"
+  }
 }
